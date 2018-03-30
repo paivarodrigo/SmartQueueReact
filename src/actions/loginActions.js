@@ -1,11 +1,11 @@
 import { LOGGING, LOGIN_SUCCESS, LOGIN_FAILURE } from '../constants/loginConstants'
 
-// export function fetchLoginFromAPI(username, password){
+// export function fetchLoginFromAPI(email, password){
 //     return (dispatch) => {
 //         dispatch(getLogin())
 //         fetch('http://smartqueue.com/api/login', {
 //             method: 'POST',
-//             body: JSON.stringify({ Username: username, Password: password })
+//             body: JSON.stringify({ Email: email, Password: password })
 //         })
 //         .then(res => res.json()
 //         .then(json => dispatch(getLoginSuccess()))
@@ -16,9 +16,13 @@ import { LOGGING, LOGIN_SUCCESS, LOGIN_FAILURE } from '../constants/loginConstan
 export function fetchLoginFromAPI(email, password) {
     return (dispatch) => {
         dispatch(getLogin());
-        setTimeout(() => {
-            dispatch(getLoginSuccess())
-        }, 5000);
+        fetch('http://swapi.co/api/people/')
+            .then(setTimeout(() => {
+                    dispatch(getLoginSuccess());
+                }, 2000))
+            .catch(err => {
+                dispatch(getLoginFailure(err.result));
+            })
     }
 }
 
@@ -34,7 +38,7 @@ function getLoginSuccess() {
     }
 }
 
-function getLoginFailure() {
+function getLoginFailure(data) {
     return {
         type: LOGIN_FAILURE,
         data

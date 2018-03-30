@@ -8,22 +8,26 @@ const initialState = {
 }
 
 export default function loginReducer(state = initialState, action) {
-    switch(action) {
+    switch(action.type) {
         case LOGGING:
             return {
                 ...state,
-                isLogging: true
+                isLogging: true,
+                success: false,
+                error: false
             }
         case LOGIN_SUCCESS:
             return {
                 ...state,
                 isLogging: false,
-                success: true
+                success: true,
+                error: false
             }
         case LOGIN_FAILURE:
             return {
                 ...state,
                 isLogging: false,
+                success: false,
                 error: true,
                 errorMessage: action.data
             }
